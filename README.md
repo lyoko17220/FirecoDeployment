@@ -14,6 +14,7 @@ Déploiement du module Fireco via Ansible
 
 - Raspian > 4.9
 - Connecté au même réseau que la machine distante
+- Activation du SSH
 - Clé SSH de l'ordinateur distant ajouté sur le Raspberry
   - Création du dossier `.ssh/` sur le Raspberry
   - Commande distante `cat ~/.ssh/id_rsa.pub | ssh pi@<IP>  'cat >> .ssh/authorized_keys'`
