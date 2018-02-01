@@ -1,0 +1,11 @@
+---
+- name: Tests
+  hosts: fireco_server
+  remote_user: pi
+  become: true
+  tasks: 
+    - name: Installation de Git
+      apt:
+        name=git
+        state=latest
+...

@@ -1,0 +1,9 @@
+
+### Ansible template
+*.retry
+
+### Jetbrain
+.idea/
+rpi-deployment.iml
+
+.DS_Store
