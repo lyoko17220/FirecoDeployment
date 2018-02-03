@@ -25,3 +25,15 @@ if [ ! -f "/firecoboot/init" ];then
 fi
 ```
 
+:warning: **Pour les phases de test, supprimer le fichier init du dossier firecoboot à chaque modification. :warning:**
+
+##### Génération et attribution du new hostname du Raspberry
+
+```bash
+$NHOST=$(head -c 500 /dev/urandom | tr -dc 'a-z0-9' | fold -w 5 | head -n 1)
+raspi-config nonint do_hostname $NHOST
+```
+
+
+
+Redémarrer le Rapsberry via `shutdown -r now` après toutes modifications système.
