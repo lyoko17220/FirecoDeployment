@@ -12,6 +12,8 @@ Déploiement du module Fireco via Ansible
 
 ### 1. Configuration minimale du Raspberry
 
+Création creation_image_raspbian_personnalisee.md
+
 - Raspian > 4.9
 - Connecté au même réseau que la machine distante
 - Activation du SSH
