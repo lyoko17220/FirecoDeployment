@@ -40,46 +40,50 @@ raspi-config nonint do_hostname $NHOST
 
 ##### Configuration des services basiques du RPI
 
+**Activation du service SSH et de VNC**
+
 ```bash
 sudo raspi-config nonint do_ssh 0
 sudo raspi-config nonint do_vnc 0
-sudo service bluetooth stop
+```
+
+**Désactivation du bluetooth**
+
+Afin de désactiver le bluetooth, une intervention empêchant le chargement des drivers doit être faite. On créer ici dans le dossier `/firecoboot/new_conf` un fichier `raspi-blacklist.conf` qui sera copier dans le répertoire `/etc/modprobe.d`.
+
+**/firecoboot/new_conf/raspi-blacklist.conf**
+
+```bash
+blacklist btbcm
+blacklist hci_uart
+```
+
+```bash
+cp -f /firecoboot/new_conf/raspi-blacklist.conf /etc/modprobe.d/raspi-blacklist.conf
 ```
 
 
 
 ##### Redéfinition de la langue du clavier
 
-Afin de palier aux soucis lié aux lignes de commandes, nous avons décider de créer notre propre fichier de configuration du clavier dans le dossier `/firecoboot/new_conf` appelé également `keyboard` attribuant uniquement la langue *fr* au clavier. On le copie donc dans le dossier `/etc/default` afin de remplacer le fichier original ayant la langue *gb* par défaut.
+Afin de palier aux soucis lié aux lignes de commandes, nous avons décider de créer notre propre fichier de configuration du clavier dans le dossier `/firecoboot/new_conf` appelé également `lxkeymap.cfg` attribuant uniquement la langue *fr* au clavier. On le copie donc dans le dossier `/home/pi/.config/lxkeymap.cfg` (lié au moteur graphique) afin de remplacer le fichier original ayant la langue *gb* par défaut.
 
-**/etc/default/keyboard**
+**/home/pi/.config/lxkeymap.cfg**
 
 ```bash
-# KEYBOARD CONFIGURATION FILE
-
-# Consult the keyboard(5) manual page.
-
-XKBMODEL="pc105"
-XKBLAYOUT="gb"
-XKBVARIANT=""
-XKBOPTIONS=""
-
-BACKSPACE="guess"
+[Global]
+layout = gb
+variant = 
+option = 
 ```
 
-**/firecoboot/new_conf/keyboard**
+**/firecoboot/new_conf/lxkeymap.cfg**
 
 ```bash
-# KEYBOARD CONFIGURATION FILE
-
-# Consult the keyboard(5) manual page.
-
-XKBMODEL="pc105"
-XKBLAYOUT="fr"
-XKBVARIANT=""
-XKBOPTIONS=""
-
-BACKSPACE="guess"
+[Global]
+layout = fr
+variant = 
+option = 
 ```
 
 
@@ -87,10 +91,8 @@ BACKSPACE="guess"
 **Copie du fichier de configuration du clavier**
 
 ```bash
-cp -f /firecoboot/new_conf/keyboard /etc/default/keyboard
+cp -f /firecoboot/new_conf/lxkeymap.cfg /home/pi/.config/lxkeymap.cfg
 ```
-
-
 
 
 
