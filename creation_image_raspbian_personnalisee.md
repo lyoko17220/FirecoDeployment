@@ -116,6 +116,14 @@ cp -f /firecoboot/new_conf/wpa_supplicant.conf /etc/wpa_supplicant/wpa_supplican
 
 
 
+##### Création du dossier .ssh
+
+```bash
+mkdir /home/pi/.ssh
+```
+
+
+
 Redémarrer le **RPI** via `shutdown -r now` après toutes modifications système.
 
 # ANNEXE
