@@ -5,6 +5,14 @@
   become: true
   tasks:
 
+    - name: remove docker-py
+      pip:
+        name: docker-py
+        state: absent
+    - name: Install docker python module
+      pip:
+        name: "docker-compose==1.12.0"
+
     - name: Initialisation dossier temporaire
       file:
         path: "/tmp/fireco-install/"
@@ -18,9 +26,7 @@
         mode: 7777
 
     - name: Installation Docker
-      shell: docker.sh
-      args:
-          chdir: "/tmp/fireco-install/"
+      command: sh /tmp/fireco-install/docker.sh
 
     - name: Chargement de l'image fireco-update
       docker_image:
@@ -33,7 +39,7 @@
         force: yes
 
     - name: Lancement du container fireco-update
-      docker:
+      docker_container:
         name: fireco-update
         image: lyoko17220/fireco-update
         state: reloaded
