@@ -1,0 +1,11 @@
+---
+- name: Tests
+  hosts: fireco_server
+  remote_user: pi
+  become: true
+  tasks:
+    - name: Désins
+      apt:
+        name: git
+        state: absent
+...

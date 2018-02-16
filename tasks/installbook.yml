@@ -3,9 +3,44 @@
   hosts: fireco_server
   remote_user: pi
   become: true
-  tasks: 
-    - name: Installation de Git
-      apt:
-        name=git
-        state=latest
+  tasks:
+
+    - name: Initialisation dossier temporaire
+      file:
+        path: "/tmp/fireco-install/"
+        state: directory
+        recurse: yes
+
+    - name: Téléchargement script Docker
+      get_url:
+        url: https://get.docker.com
+        dest: "/tmp/fireco-install/docker.sh"
+        mode: 7777
+
+    - name: Installation Docker
+      shell: docker.sh
+      args:
+          chdir: "/tmp/fireco-install/"
+
+    - name: Chargement de l'image fireco-update
+      docker_image:
+        name: lyoko17220/fireco-update
+        force: yes
+
+    - name: Création du volume commun entre Update et Worker
+      docker_volume:
+        name: fireco
+        force: yes
+
+    - name: Lancement du container fireco-update
+      docker:
+        name: fireco-update
+        image: lyoko17220/fireco-update
+        state: reloaded
+        pull: always
+        volumes:
+        - fireco:/app
+        ports:
+        - "81"
+
 ...
