@@ -86,12 +86,32 @@ variant =
 option = 
 ```
 
-
-
 **Copie du fichier de configuration du clavier**
 
 ```bash
 cp -f /firecoboot/new_conf/lxkeymap.cfg /home/pi/.config/lxkeymap.cfg
+```
+
+
+
+##### Configuration du Wi-Fi du RPI
+
+Création du fichier `/firecoboot/new_conf/wpa_supplicant.conf` contenant les différents SSID ainsi que les clés WPA des différents réseaux.
+
+**Exemple d'écriture d'un réseau dans le fichier**
+
+```bash
+network={
+	ssid="nom_du_routeur"
+	psk="clef_du_reseau"
+	key_mgmt=securite_du_reseau
+}
+```
+
+**Copie du fichier de configuration**
+
+```bash
+cp -f /firecoboot/new_conf/wpa_supplicant.conf /etc/wpa_supplicant/wpa_supplicant.conf
 ```
 
 
