@@ -126,6 +126,16 @@ mkdir /home/pi/.ssh
 
 Redémarrer le **RPI** via `shutdown -r now` après toutes modifications système.
 
+
+
+#### Création de l'image "finale"
+
+```bash
+sudo dd if=/dev/sdb of=~/raspbian_backup.img
+```
+
+
+
 # ANNEXE
 
 **RPI** : Raspberry Pi (ici le Pi 3)
