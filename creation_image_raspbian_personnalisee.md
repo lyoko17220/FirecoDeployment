@@ -130,8 +130,10 @@ Redémarrer le **RPI** via `shutdown -r now` après toutes modifications systèm
 
 #### Création de l'image "finale"
 
+La ligne de commande permettant de créer une image .iso est :
+
 ```bash
-sudo dd if=/dev/sdb of=~/raspbian_backup.img
+genisoimage -o nom_image.iso /chemin/de/l/image
 ```
 
 
