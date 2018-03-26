@@ -20,7 +20,7 @@ Bloque l'exécution du script au premier démarrage du raspberry.
 
 ```bash
 if [ ! -f "/firecoboot/init" ];then 
-  touch init 
+  touch /firecoboot/init 
   sh /firecoboot/firstboot.sh
 fi
 ```
