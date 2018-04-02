@@ -20,5 +20,8 @@ cp -f /firecoboot/new_conf/wpa_supplicant.conf /etc/wpa_supplicant/wpa_supplican
 #Créer le dossier .ssh
 mkdir -m 777 /home/pi/.ssh
 
+#Créer la racine NAS
+mkdir -m 777 /firecodata
+
 #Reboot du Raspberry après configuration
 shutdown -r now
