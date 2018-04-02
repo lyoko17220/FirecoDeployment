@@ -14,18 +14,16 @@ Ajouter les commandes bash avant la ligne contenant le `exit 0`.
 
 **:warning: Créer un fichier rc.local.old en cas de problème(s). :warning:**
 
-On vérifie si le nom du raspberry a été changé ou non.
+On vérifie si le fichier `/firecoboot/init` existe ou non.
 
 Bloque l'exécution du script au premier démarrage du raspberry.
 
 ```bash
-_RPIHOSTNAME=$(raspi-config nonint get_hostname)
-if [ "$_RPIHOSTNAME" != "raspberrypi" ];then
+if [ ! -f "/firecoboot/init" ];then 
+  touch /firecoboot/init 
   sh /firecoboot/firstboot.sh
 fi
 ```
-
-:warning: **Pour les phases de test, réadapter avec la création d'un fichier init afin de simplifier. :warning:**
 
 
 
@@ -119,12 +117,24 @@ cp -f /firecoboot/new_conf/wpa_supplicant.conf /etc/wpa_supplicant/wpa_supplican
 ##### Création du dossier .ssh
 
 ```bash
-mkdir /home/pi/.ssh
+mkdir -m 777 /home/pi/.ssh
 ```
 
 
 
 Redémarrer le **RPI** via `shutdown -r now` après toutes modifications système.
+
+
+
+#### Création de l'image "finale"
+
+La ligne de commande permettant de créer une image .iso est :
+
+```bash
+genisoimage -o nom_image.iso /chemin/de/l/image
+```
+
+
 
 # ANNEXE
 

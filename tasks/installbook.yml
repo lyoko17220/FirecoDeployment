@@ -5,6 +5,14 @@
   become: true
   tasks:
 
+    - name: remove docker-py
+      pip:
+        name: docker-py
+        state: absent
+    - name: Install docker python module
+      pip:
+        name: "docker-compose==1.12.0"
+
     - name: Initialisation dossier temporaire
       file:
         path: "/tmp/fireco-install/"
