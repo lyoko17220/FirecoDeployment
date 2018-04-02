@@ -18,29 +18,32 @@
         mode: 7777
 
     - name: Installation Docker
-      shell: docker.sh
-      args:
-          chdir: "/tmp/fireco-install/"
+      shell: /tmp/fireco-install/docker.sh
 
     - name: Chargement de l'image fireco-update
-      docker_image:
-        name: lyoko17220/fireco-update
-        force: yes
+      shell: docker pull lyoko17220/fireco-update
 
-    - name: Création du volume commun entre Update et Worker
-      docker_volume:
-        name: fireco
-        force: yes
+    - name: Chargement de l'image fireco-worker
+      shell: docker pull lyoko17220/fireco-worker
 
-    - name: Lancement du container fireco-update
-      docker:
-        name: fireco-update
-        image: lyoko17220/fireco-update
-        state: reloaded
-        pull: always
-        volumes:
-        - fireco:/app
-        ports:
-        - "81"
+    - name: Création dossier d'échange avec le Worker
+      file:
+        path: "/home/pi/firecoworker"
+        state: directory
+        recurse: yes
+        mode: 0777
+
+    - name: Stoppage de tout les containers
+      shell: docker stop $(docker ps -a -q) && docker rm $(docker ps -a -q)
+
+    - name: Lancement fireco-update
+      shell: docker run -d -p 8081:8081 -p 9002:9001 -v /home/pi/firecoworker:/data --name fireco-updater-c lyoko17220/fireco-update
+
+    - name: Initialisation de l'updater (attente app Worker)
+      pause:
+          minutes: 3
+
+    - name: Lancement fireco-worker
+      shell: docker run -d -p 8082:8082 -p 9001:9001 -v /home/pi/firecoworker:/data --name fireco-worker-c lyoko17220/fireco-worker
 
 ...
